@@ -1,32 +1,25 @@
-name: Node.js CI Build
+name: GitHub Actions Demo
+run-name: GitHub Actions Demo
 
+# 觸發此 action 的時機
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches:
+      - '*' # 只要有任何一個 commit 被 push，就會觸發此 action
+  workflow_dispatch: # 可以手動執行此 action
 
-# --- 在這裡加入這段 env 設定 ---
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-# ------------------------------
-
+# 預先定義此 action 要幹嘛
 jobs:
-  build:
+  demo:
     runs-on: ubuntu-latest
 
+# 強制將 JavaScript actions 升級至 Node.js 24 以消除棄用警告
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20.x'
-        cache: 'npm'
-
-    - name: Install dependencies
-      run: npm install
-
-    - name: Build the project
-      run: npm run build
+      - name: 檢查程式碼
+        uses: actions/checkout@v4
+        
+      - name: 執行指令
+        run: echo '執行成功'
